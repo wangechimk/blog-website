@@ -1,0 +1,17 @@
+{% extends 'base.html'%}
+{%block content%}
+<div class="container">
+    <form action="/login" method="POST">
+        <div class="form-group">
+            <label>User Name</label>
+            <input type="text" class="form-control" placeholder="User Name" name="username">
+        </div>
+        <div class="form-group">
+            <label>Password</label>
+            <input type="password" class="form-control" placeholder="Password" name="password">
+        </div>
+        <button type="submit" class="btn btn-info btn-sm">Log In</button>
+        <p>Or <a href="/signup"> Sign UP</a> here</p>
+    </form>
+</div>
+{%endblock%}
