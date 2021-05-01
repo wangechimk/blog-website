@@ -11,7 +11,10 @@ def login():
         form = request.form
         username = form.get('username')
         password = form.get('password')
+        print(password, 'password')
+        print(username, 'username')
         user = User.query.filter_by(username=username).first()
+        print(user, 'user')
         if user is None:
             error = 'The user or password is not correct'
             return render_template('auth/login.html', error=error)
@@ -21,7 +24,7 @@ def login():
             error = 'The username or password is not correct'
             return render_template('auth/login.html', error=error)
         login_user(user)
-        return url_for('/')
+        return redirect(url_for('main.index'))
     return render_template('/auth/login.html')
 
 
@@ -47,12 +50,12 @@ def signup():
             return render_template('auth/signup.html', error=error)
         else:
             # Login the user
-            user = User.query.filter_by(username=username).all()
+            user = User.query.filter_by(username=username).first()
             # Check is a username already exists
             if user is not None:
                 error = 'A user with that username already exists'
                 return render_template('auth/signup.html', error=error)
-            user = User.query.filter_by(email=email).all()
+            user = User.query.filter_by(email=email).first()
             # Check if an email already exists
             if user is not None:
                 error = 'A user with that email already exists'
@@ -60,9 +63,10 @@ def signup():
             # Set all fields to a user instance
             user = User(
                 username=username,
-                email=email
+                email=email,
+                password=password
             )
-            user.set_password(password)
+            # user.secure_password(password)
             user.save()
             return redirect(url_for('auth.login'))
     return render_template('auth/signup.html')

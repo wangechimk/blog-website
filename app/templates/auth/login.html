@@ -1,6 +1,7 @@
 {% extends 'base.html'%}
 {%block content%}
 <div class="container">
+    <div class="col-md-3"></div>
     <form action="/login" method="POST">
         <div class="form-group">
             <label>User Name</label>
@@ -13,5 +14,6 @@
         <button type="submit" class="btn btn-info btn-sm">Log In</button>
         <p>Or <a href="/signup"> Sign UP</a> here</p>
     </form>
+
 </div>
 {%endblock%}
