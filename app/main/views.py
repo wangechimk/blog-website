@@ -40,6 +40,7 @@ def updateprofile(name):
 @main.route('/new_post', methods=['POST', 'GET'])
 @login_required
 def new_blog():
+    subscribers = Subscriber.query.all()
     form = CreateBlog()
     if form.validate_on_submit():
         title = form.title.data
@@ -47,8 +48,22 @@ def new_blog():
         user_id = current_user._get_current_object().id
         blog = Blog(title=title, content=content, user_id=user_id)
         blog.save()
+        for subscriber in subscribers:
+            mail_message("New Blog Post", "email/new_blog", subscriber.email, blog=blog)
         return redirect(url_for('main.index'))
+    flash('You Posted a new Blog')
     return render_template('newblog.html', form=form)
+
+
+@main.route('/comment/<blog_id>', methods=['Post', 'GET'])
+@login_required
+def comment(blog_id):
+    blog = Blog.query.get(blog_id)
+    comment = request.form.get('newcomment')
+    new_comment = Comment(comment=comment, user_id=current_user._get_current_object().id, blog_id=blog_id)
+    new_comment.save()
+    comments = Comment.query.filter_by(blog_id=blog_id).all()
+    return redirect(url_for('main.blog', id=blog.id))
 
 
 @main.route('/subscribe', methods=['POST', 'GET'])
@@ -56,5 +71,7 @@ def subscribe():
     email = request.form.get('subscriber')
     new_subscriber = Subscriber(email=email)
     new_subscriber.save_subscriber()
-    mail_message("Subscribed to Archïtecture", "email/welcome_subscriber", new_subscriber.email, new_subscriber=new_subscriber)
+    mail_message("Subscribed to Archïtecture", "email/welcome_subscriber", new_subscriber.email,
+                 new_subscriber=new_subscriber)
+    flash('Sucessfuly subscribed')
     return redirect(url_for('main.index'))
