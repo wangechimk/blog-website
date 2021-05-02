@@ -61,16 +61,18 @@
 </section>
 
 <!--  blog section-->
-<div class="col-md-9">
+<div class ="container">
+    <div class = row>
+<div class="col-md-8">
                 {% for blog in blogs %}
                     <hr>
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-7">
                             <p>Tittle: {{blog.title}}</p>
                             <p>{{blog.content}}</p>
                             <p>Posted: {{blog.posted.strftime('%d-%m-%Y')}}</p>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-5">
                             <form class="form-inline" action="{{url_for('main.comment',blog_id = blog.id)}}" method="POST">
                                 <div class="md-form form-group">
                                     <!-- <i class="fa fa-lock prefix"></i> -->
@@ -87,4 +89,18 @@
                     <hr>
                 {% endfor %}
             </div>
+        <div class="col-md-4">
+            <form class="form-inline" action="" method="POST">
+                    <div class="md-form form-group">
+                        <label for="form92">Enter Email Address...</label>
+                        <input type="email"  class="form-control" name ="subscriber" required>
+                    </div>
+                    <div class="md-form form-group">
+                        <button class="btn btn-sm btn-outline-info">Subscribe</button>
+                    </div>
+                </form>
+
+        </div>
+    </div>
+</div>
 {%endblock%}

@@ -56,5 +56,5 @@ def subscribe():
     email = request.form.get('subscriber')
     new_subscriber = Subscriber(email=email)
     new_subscriber.save_subscriber()
-    mail_message("Subscribed to D-Blog", "email/welcome", new_subscriber.email, new_subscriber=new_subscriber)
+    mail_message("Subscribed to Archïtecture", "email/welcome_subscriber", new_subscriber.email, new_subscriber=new_subscriber)
     return redirect(url_for('main.index'))
