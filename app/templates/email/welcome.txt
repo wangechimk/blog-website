@@ -1,0 +1,3 @@
+Hello {{user.username}}, Welcome to Archïtecture.
+You have joined a great blogging platform where you would be able to receive blogs updates regularly
+and the latest design features.

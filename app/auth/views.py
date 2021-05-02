@@ -1,6 +1,6 @@
 from flask import request, render_template, url_for, redirect
 from flask_login import login_user, logout_user
-
+from ..email import mail_message
 from app.auth import auth
 from app.models import User
 
@@ -76,3 +76,18 @@ def signup():
 def logout():
     logout_user()
     return redirect(url_for('auth.login'))
+
+
+@auth.route('/register', methods=["GET", "POST"])
+def register():
+    form = RegistrationForm()
+    if form.validate_on_submit():
+        user = User(email=form.email.data, username=form.username.data, password=form.password.data)
+        db.session.add(user)
+        db.session.commit()
+
+        mail_message("Welcome to Archïtecture", "email/welcome_user", user.email, user=user)
+
+        return redirect(url_for('auth.login'))
+        title = "New Account"
+    return render_template('auth/signup.html', registration_form=form)
