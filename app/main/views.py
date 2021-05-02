@@ -1,9 +1,10 @@
 from flask import render_template, request, redirect, url_for, abort, flash
 from flask_login import current_user, login_required, current_user
 from app.main import main
-from app.models import User, Blog
+from app.models import User, Blog, Comment, Subscriber
 from .forms import UpdateProfile, CreateBlog
 from .. import db
+from ..email import mail_message
 
 
 @main.route('/')
@@ -48,3 +49,12 @@ def new_blog():
         blog.save()
         return redirect(url_for('main.index'))
     return render_template('newblog.html', form=form)
+
+
+@main.route('/subscribe', methods=['POST', 'GET'])
+def subscribe():
+    email = request.form.get('subscriber')
+    new_subscriber = Subscriber(email=email)
+    new_subscriber.save_subscriber()
+    mail_message("Subscribed to D-Blog", "email/welcome", new_subscriber.email, new_subscriber=new_subscriber)
+    return redirect(url_for('main.index'))
