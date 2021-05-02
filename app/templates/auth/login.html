@@ -1,19 +1,19 @@
 {% extends 'base.html'%}
 {%block content%}
-<div class="container">
-    <div class="col-md-3"></div>
+<article class="col-md-8">
+<div class="row">
     <form action="/login" method="POST">
-        <div class="form-group">
+        <div class="col-sm-6 form-group">
             <label>User Name</label>
             <input type="text" class="form-control" placeholder="User Name" name="username">
         </div>
-        <div class="form-group">
+        <div class="col-sm-6 form-group">
             <label>Password</label>
             <input type="password" class="form-control" placeholder="Password" name="password">
         </div>
         <button type="submit" class="btn btn-info btn-sm">Log In</button>
         <p>Or <a href="/signup"> Sign UP</a> here</p>
     </form>
-
-</div>
+    </div>
+</article>
 {%endblock%}
