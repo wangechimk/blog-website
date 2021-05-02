@@ -37,3 +37,9 @@ h3,h4 {
     width:1200vh;
     height:700vh;
 }
+.account-img {
+    height: 150px;
+    width: 150px;
+    margin-right: 20px;
+    margin-bottom: 16px;
+  }
