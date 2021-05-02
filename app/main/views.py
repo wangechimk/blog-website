@@ -9,7 +9,7 @@ from ..email import mail_message
 
 @main.route('/')
 def index():
-    blogs = Blog.query.paginate(page=page, per_page=5)
+    blogs = Blog.query.order_by(Blog.posted.desc()).paginate(page=page, per_page=4)
     page = request.args.get('page', 1, type=int)
     return render_template('index.html', blogs=blogs)
 
