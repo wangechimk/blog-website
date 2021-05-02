@@ -2,18 +2,14 @@ from flask_login import current_user
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileAllowed
 from wtforms import StringField, PasswordField, SubmitField, TextAreaField, SelectField
-from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
+from wtforms.validators import Required, DataRequired, Length, Email, EqualTo, ValidationError
 
 from app.models import User
 
 
 class UpdateProfile(FlaskForm):
-    username = StringField('Username',
-                           validators=[DataRequired(), Length(min=2, max=20)])
-    # email = StringField('Email',
-    #                     validators=[DataRequired(), Email()])
-    picture = FileField('Update Profile Picture', validators=[FileAllowed(['jpg', 'png', 'jpeg'])])
-    submit = SubmitField('Update')
+    bio = TextAreaField('Write a brief bio about you.', validators=[Required()])
+    submit = SubmitField('Save')
 
     def validate_username(self, username):
         if username.data != current_user.username:
