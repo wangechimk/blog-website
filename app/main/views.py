@@ -9,7 +9,8 @@ from ..email import mail_message
 
 @main.route('/')
 def index():
-    blogs = Blog.query.order_by(Blog.posted.desc()).limit(10).all()
+    blogs = Blog.query.paginate(page=page, per_page=5)
+    page = request.args.get('page', 1, type=int)
     return render_template('index.html', blogs=blogs)
 
 
@@ -100,3 +101,14 @@ def updateblog(blog_id):
         form.title.data = blog.title
         form.content.data = blog.content
     return render_template('newblog.html', form=form)
+
+
+@main.route('/blog/<blog_id>/delete', methods=['POST'])
+@login_required
+def delete_post(blog_id):
+    blog = Blog.query.get(blog_id)
+    if blog.user != current_user:
+        abort(403)
+    blog.delete()
+    flash("You have deleted your Blog succesfully!")
+    return redirect(url_for('main.index'))
