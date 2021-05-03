@@ -69,7 +69,7 @@
                         <hr>
                         <div class="row ">
                             <div class="col-md-2 ">
-                                    <img class="rounded-circle blog-img mr-10" src="{{ url_for('static', filename='photos/' + blog.user.profile_pic_path) }}">
+                                    <img class="rounded-circle blog-img mr-10" src="{{ url_for('static', filename='img/' + blog.user.profile_pic_path) }}">
                                     <p id="usern"><a href="{{url_for('main.user_posts',username = blog.user.username)}}"><span  style="color: blue"><strong>{{blog.user.username | title}}</strong></span> </a> </p>
                             </div>
                             <div class="col-md-5 ml-10 ">
@@ -110,34 +110,35 @@
                 {% endfor %}
 
             </div>
-        <div class="col-md-4">
-            {% for message in get_flashed_messages() %}
-                <div class="alert alert-success">
-                <button type="button" class="close" data-dismiss="alert">&times;</button>
-                {{ message }}
-                </div>
-                {% endfor %}
-                <form class="form-inline ml-4" action="{{url_for('main.subscribe')}}" method="POST">
-                    <div class="md-form form-group">
-                        <label class="white-color">Enter Email Address...</label>
-                        <input type="email"  class="form-control" name ="subscriber" required>
-                    </div>
-                    <div class="md-form form-group">
-                        <button class="btn btn-sm btn-outline-info">Subscribe</button>
-                    </div>
-                </form>
+<!--        <div class="col-md-4">-->
+<!--            {% for message in get_flashed_messages() %}-->
+<!--                <div class="alert alert-success">-->
+<!--                <button type="button" class="close" data-dismiss="alert">&times;</button>-->
+<!--                {{ message }}-->
+<!--                </div>-->
+<!--                {% endfor %}-->
+<!--                <form class="form-inline ml-4" action="{{url_for('main.subscribe')}}" method="POST">-->
+<!--                    <div class="md-form form-group">-->
+<!--                        <label class="white-color">Enter Email Address...</label>-->
+<!--                        <input type="email"  class="form-control" name ="subscriber" required>-->
+<!--                    </div>-->
+<!--                    <div class="md-form form-group">-->
+<!--                        <button class="btn btn-sm btn-outline-info">Subscribe</button>-->
+<!--                    </div>-->
+<!--                </form>-->
 
-        </div>
+<!--        </div>-->
     </div>
 </div>
 <!--   footer quotes-->
     <footer class ="text-center">
-        <article class ="col-sm-6">
-            <p class="inline-block slideanim"><i class="fas fa-quote-left"></i>{{quote.quote}}<i class="fas fa-quote-right"></i>
+
+           <h1>Quotes</h1>
+            <p class="inline-block slideanim">{{quote.quote}}</i>
     <h1 class="uppercase general-sub slideanim"> - {{quote.author}}</h1>
             </p>
 
-        </article>
+
 
     </footer>
 {%endblock%}

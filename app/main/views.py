@@ -14,8 +14,8 @@ from app.requests import get_quotes
 @main.route('/')
 def index():
     quotes = get_quotes()
-    blogs = Blog.query.order_by(Blog.posted.desc()).paginate(page=page, per_page=4)
     page = request.args.get('page', 1, type=int)
+    blogs = Blog.query.order_by(Blog.posted.desc()).paginate(page=page, per_page=3)
     return render_template('index.html', blogs=blogs, quote=quotes)
 
 
@@ -23,7 +23,7 @@ def save_picture(form_picture):
     random_hex = secrets.token_hex(8)
     _, f_ext = os.path.splitext(form_picture.filename)
     picture_filename = random_hex + f_ext
-    picture_path = os.path.join('app/static/photos', picture_filename)
+    picture_path = os.path.join('app/static/img', picture_filename)
     output_size = (200, 200)
     i = Image.open(form_picture)
     i.thumbnail(output_size)
@@ -49,8 +49,13 @@ def profile():
         form.username.data = current_user.username
         form.email.data = current_user.email
         form.bio.data = current_user.bio
-    profile_pic_path = url_for('static', filename='photos/' + current_user.profile_pic_path)
-    return render_template('profile/profile.html', profile_pic_path=profile_pic_path, form=form)
+        if current_user.profile_pic_path is not None:
+            profile_pic_path = url_for('static', filename='img/' + current_user.profile_pic_path)
+        else:
+            profile_pic_path = str(None)
+        return render_template('profile/profile.html', profile_pic_path=profile_pic_path, form=form)
+    else:
+        return
 
 
 @main.route('/user/<name>/updateprofile', methods=['POST', 'GET'])
@@ -101,7 +106,7 @@ def subscribe():
     email = request.form.get('subscriber')
     new_subscriber = Subscriber(email=email)
     new_subscriber.save_subscriber()
-    mail_message("Subscribed to Archïtecture", "email/welcome_subscriber", new_subscriber.email,
+    mail_message("Subscribed to Archïtecture", "email/welcome", new_subscriber.email,
                  new_subscriber=new_subscriber)
     flash('Sucessfuly subscribed')
     return redirect(url_for('main.index'))

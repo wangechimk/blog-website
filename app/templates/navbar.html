@@ -7,21 +7,21 @@
           <span class="icon-bar"></span>
         </button>
         <a class="navbar-brand hidden-xs" href="#myPage"></a>
-        <a class="navbar-brand" href="#myPage">Blog Website</a>
+        <a class="navbar-brand" href="#myPage">Archïtecture</a>
       </div>
       <div class="collapse navbar-collapse" id="myNavbar">
         <ul class="nav navbar-nav navbar-right">
           <li><a href="{{ url_for('main.index') }}">Home</a></li>
           <li><a href="{{ url_for('main.index') }}">About</a></li>
-          <li><a href="{{ url_for('main.index') }}">Blog</a></li>
+          <li><a href="{{ url_for('main.new_blog') }}">Blog</a></li>
           {% if current_user.is_authenticated %}
-          <li><a href="{{url_for('main.profile',name=current_user.username)}}"><i class="far fa-user"></i>&nbsp; My account</a></li>
-          <li><a href="{{ url_for('auth.logout') }}"><i class="fas fa-sign-out-alt"></i>&nbsp;log out</a></li>
+          <li><a href="{{url_for('main.profile',name=current_user.username)}}"><i class="fa fa-user"></i>&nbsp; My account</a></li>
+          <li><a href="{{ url_for('auth.logout') }}"><i class="fa fa-sign-out-alt"></i>&nbsp;log out</a></li>
 
            {% else %}
-          <li><a href="{{url_for('auth.signup')}}"><i class="fas fa-user-plus"></i></i>&nbsp; <strong>Sign Up</strong></a></li>
-          <li><a href="{{url_for('auth.login')}}"><i class="fas fa-sign-in-alt"></i></i>&nbsp; <strong>Log In</strong></a></li>
-
+          <li><a href="{{url_for('auth.signup')}}"><i class="fa fa-user-plus"></i></i>&nbsp; <strong>Sign Up</strong></a></li>
+          <li><a href="{{url_for('auth.login')}}"><i class="fa fa-sign-in-alt"></i></i>&nbsp; <strong>Log In</strong></a></li>
+          {% endif %}
         </ul>
       </div>
     </div>
