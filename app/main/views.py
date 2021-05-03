@@ -8,13 +8,15 @@ from ..email import mail_message
 import secrets
 import os
 from PIL import Image
+from app.requests import get_quotes
 
 
 @main.route('/')
 def index():
+    quotes = get_quotes()
     blogs = Blog.query.order_by(Blog.posted.desc()).paginate(page=page, per_page=4)
     page = request.args.get('page', 1, type=int)
-    return render_template('index.html', blogs=blogs)
+    return render_template('index.html', blogs=blogs, quote=quotes)
 
 
 def save_picture(form_picture):
